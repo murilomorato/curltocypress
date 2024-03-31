@@ -8,7 +8,8 @@ document.addEventListener("DOMContentLoaded", function () {
             try {
                 stringHandler.convertCurl(curlText);
             } catch (error) {
-                printResultToUser('Invalid CUrl. Verify and try again.' + error)
+                printResultToUser('Invalid CUrl. Verify and try again.')
+                console.log(error)
             }
 
         }

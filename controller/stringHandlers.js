@@ -10,26 +10,23 @@ export function convertCurl(curlCommand) {
 }
 
 export function parseCurl(curlString) {
-    // Inicializa as variáveis
+
     let Request = {};
     let Headers = [];
     let body = '';
 
-    // Regex para extrair a URL e o método da request
     let requestRegex = /--request\s+(\S+)\s+'([^']+)'/;
     let requestMatch = curlString.match(requestRegex);
     if (requestMatch) {
         Request = { method: requestMatch[1], url: requestMatch[2] };
     }
 
-    // Regex para extrair os headers
     let headerRegex = /--header\s+'([^:]+):\s*([^']+)'/g;
     let headerMatch;
     while ((headerMatch = headerRegex.exec(curlString)) !== null) {
         Headers.push({ key: headerMatch[1], value: headerMatch[2] });
     }
 
-    // Regex para extrair o corpo da request (data)
     let dataRegex = /--data\s+'([^']+)'/;
     let dataMatch = curlString.match(dataRegex);
     if (dataMatch) {
