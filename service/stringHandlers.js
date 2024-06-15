@@ -1,4 +1,3 @@
-import * as viewController from "../controller/viewController.js";
 
 export function convertCurl(curlCommand) {
 
@@ -6,7 +5,7 @@ export function convertCurl(curlCommand) {
     const cypressObjectModel = cypressObjectAdapter(curlObject)
     const cyRequestText = objectToCyRequest(cypressObjectModel)
 
-    viewController.printResultToUser(cyRequestText)
+    return cyRequestText
 }
 
 export function parseCurl(curlString) {

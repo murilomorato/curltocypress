@@ -6,10 +6,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (curlText) {
             try {
-                stringHandler.convertCurl(curlText);
+                printResultToUser(stringHandler.convertCurl(curlText));
+
             } catch (error) {
                 printResultToUser('Invalid CUrl. Verify and try again.')
                 console.log(error)
+
             }
 
         }
