@@ -1,4 +1,4 @@
-import * as stringHandler from "./stringHandlers.js";
+import * as stringHandler from "../service/stringHandlers.js";
 
 document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("convertBtn").addEventListener("click", function () {

@@ -1,4 +1,4 @@
-import * as viewController from "./viewController.js";
+import * as viewController from "../controller/viewController.js";
 
 export function convertCurl(curlCommand) {
 
