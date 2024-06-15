@@ -11,21 +11,52 @@ export function convertCurl(curlCommand) {
 
 export function parseCurl(curlString) {
 
-    let Request = {};
-    let Headers = [];
-    let body = '';
+    let Request = getVerbAndUrl(curlString);
+    let Headers = getHeaders(curlString);
+    let body = getBody(curlString);
 
-    let requestRegex = /--request\s+(\S+)\s+'([^']+)'/;
-    let requestMatch = curlString.match(requestRegex);
-    if (requestMatch) {
-        Request = { method: requestMatch[1], url: requestMatch[2] };
+    return { Request, Headers, body };
+}
+
+export function getVerbAndUrl(curlString) {
+
+    const VERBRegex = /--request\s+(\S+)\s+'([^']+)'/;
+    const GETRegex = /--location\s+'([^']+)'/;
+    let verbMethod;
+
+    const is_PostPutPatch = curlString.match(VERBRegex) ? true : false
+
+    if (is_PostPutPatch) {
+        let requestMatch = curlString.match(VERBRegex)
+        verbMethod = { method: requestMatch[1], url: requestMatch[2] };
+
+    } else {
+        let requestMatch = curlString.match(GETRegex)
+        verbMethod = { method: 'GET', url: requestMatch[1] };
+
     }
 
+    return verbMethod
+
+}
+
+export function getHeaders(curlString) {
+
+    let Headers = [];
     let headerRegex = /--header\s+'([^:]+):\s*([^']+)'/g;
     let headerMatch;
+
     while ((headerMatch = headerRegex.exec(curlString)) !== null) {
         Headers.push({ key: headerMatch[1], value: headerMatch[2] });
     }
+
+    return Headers
+
+}
+
+export function getBody(curlString) {
+
+    let body = '';
 
     let dataRegex = /--data\s+'([^']+)'/;
     let dataMatch = curlString.match(dataRegex);
@@ -33,7 +64,8 @@ export function parseCurl(curlString) {
         body = dataMatch[1];
     }
 
-    return { Request, Headers, body };
+    return body
+
 }
 
 export function getQueryString(url) {
@@ -127,3 +159,4 @@ export function objectToCyRequest(curlObject) {
 
     return cyRequestText;
 }
+
